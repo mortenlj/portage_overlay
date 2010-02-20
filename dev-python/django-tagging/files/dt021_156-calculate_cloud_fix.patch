@@ -1,0 +1,13 @@
+Index: tagging/utils.py
+===================================================================
+--- tagging/utils.py	(revision 132)
++++ tagging/utils.py	(working copy)
+@@ -230,7 +230,7 @@
+     if distribution == LINEAR or max_weight == 1:
+         return weight
+     elif distribution == LOGARITHMIC:
+-        return math.log(weight) * max_weight / math.log(max_weight)
++        return min((max_weight, math.log(weight) * max_weight / math.log(max_weight)))
+     raise ValueError(_('Invalid distribution algorithm specified: %s.') % distribution)
+ 
+ def calculate_cloud(tags, steps=4, distribution=LOGARITHMIC):

@@ -1,0 +1,38 @@
+--- bluez/btmodule.c.org	2009-11-07 15:42:51.000000000 +0100
++++ bluez/btmodule.c	2009-11-07 15:43:42.000000000 +0100
+@@ -680,7 +680,7 @@
+ static PyObject *
+ sock_bind(PySocketSockObject *s, PyObject *addro)
+ {
+-	struct sockaddr addr;
++	struct sockaddr addr = {0};
+ 	int addrlen;
+ 	int res;
+ 
+@@ -771,7 +771,7 @@
+ static PyObject *
+ sock_connect(PySocketSockObject *s, PyObject *addro)
+ {
+-	struct sockaddr addr;
++	struct sockaddr addr = {0};
+ 	int addrlen;
+ 	int res;
+ 	int timeout;
+@@ -806,7 +806,7 @@
+ static PyObject *
+ sock_connect_ex(PySocketSockObject *s, PyObject *addro)
+ {
+-	struct sockaddr addr;
++	struct sockaddr addr = {0};
+ 	int addrlen;
+ 	int res;
+ 	int timeout;
+@@ -1194,7 +1194,7 @@
+ {
+ 	PyObject *addro;
+ 	char *buf;
+-	struct sockaddr addr;
++	struct sockaddr addr = {0};
+ 	int addrlen, len, n = 0, flags, timeout;
+ 
+ 	flags = 0;
