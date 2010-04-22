@@ -9,12 +9,13 @@ inherit distutils subversion versionator
 PATCH=$(get_version_component_range $(get_version_component_count))
 REVISION=${PATCH/pre}
 
-DESCRIPTION="Plugin for spam filtering"
-HOMEPAGE="http://trac.edgewall.org/wiki/SpamFilter"
-ESVN_REPO_URI="http://svn.edgewall.com/repos/trac/sandbox/spam-filter@${REVISION}"
+DESCRIPTION="Plugin for statistics"
+HOMEPAGE="http://trac-hacks.org/wiki/MasterTicketsPlugin"
+ESVN_REPO_URI="http://trac-hacks.org/svn/masterticketsplugin/0.11/@${REVISION}"
 LICENSE="BSD-2"
 KEYWORDS="~x86"
 SLOT="0"
 IUSE=""
-DEPEND="dev-python/setuptools"
-
+DEPEND="dev-python/setuptools
+        media-gfx/graphviz
+        >=dev-libs/clearsilver-0.10.2"
