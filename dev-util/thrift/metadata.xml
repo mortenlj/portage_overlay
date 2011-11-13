@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer>
+    <email>mortenjo+ebuild@ifi.uio.no</email>
+    <description>Packages I have created out of neccessity. If you would like to take over, contact me.</description> -->
+  </maintainer>
+  <longdescription>
+    Thrift is a software framework for scalable cross-language services development. Thrift allows you to define data
+    types and service interfaces in a simple definition file. Taking that file as input, the compiler generates code to be used to
+    easily build RPC clients and servers that communicate seamlessly across programming languages.
+  </longdescription>
+  <use>
+    <flag name='erlang'>Build Erlang compiler and library</flag>
+    <flag name='csharp'>Build C# compiler and library</flag>
+    <flag name='objc'>Build Objective C (Cocoa) compiler</flag>
+    <flag name='smalltalk'>Build Smalltalk compiler</flag>
+    <flag name='haskell'>Build Haskell compiler and library</flag>
+    <flag name='glib'>Build C (GLib) compiler</flag>
+  </use>
+</pkgmetadata>
