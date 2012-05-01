@@ -1,0 +1,80 @@
+Index: src/transcoding/transcode_ext_handler.cc
+===================================================================
+--- src/transcoding/transcode_ext_handler.cc	(revision 2103)
++++ src/transcoding/transcode_ext_handler.cc	(working copy)
+@@ -105,16 +105,6 @@
+         Ref<Dictionary> mappings = ConfigManager::getInstance()->getDictionaryOption(
+                 CFG_IMPORT_MAPPINGS_MIMETYPE_TO_CONTENTTYPE_LIST);
+ 
+-        if (mappings->get(mimeType) == CONTENT_TYPE_PCM)
+-        {
+-            String freq = it->getResource(0)->getAttribute(MetadataHandler::getResAttrName(R_SAMPLEFREQUENCY));
+-            String nrch = it->getResource(0)->getAttribute(MetadataHandler::getResAttrName(R_NRAUDIOCHANNELS));
+-
+-            if (string_ok(freq)) 
+-                mimeType = mimeType + _(";rate=") + freq;
+-            if (string_ok(nrch))
+-                mimeType = mimeType + _(";channels=") + nrch;
+-        }
+     }
+ 
+     info->content_type = ixmlCloneDOMString(mimeType.c_str());
+Index: src/cds_resource_manager.cc
+===================================================================
+--- src/cds_resource_manager.cc	(revision 2103)
++++ src/cds_resource_manager.cc	(working copy)
+@@ -232,15 +232,11 @@
+                     if (string_ok(frequency))
+                     {
+                         t_res->addAttribute(MetadataHandler::getResAttrName(R_SAMPLEFREQUENCY), frequency);
+-                        targetMimeType = targetMimeType + _(";rate=") + 
+-                                         frequency;
+                     }
+                 }
+                 else if (freq != OFF)
+                 {
+                     t_res->addAttribute(MetadataHandler::getResAttrName(R_SAMPLEFREQUENCY), String::from(freq));
+-                    targetMimeType = targetMimeType + _(";rate=") + 
+-                                     String::from(freq);
+                 }
+ 
+                 int chan = tp->getNumChannels();
+@@ -250,15 +246,11 @@
+                     if (string_ok(nchannels))
+                     {
+                         t_res->addAttribute(MetadataHandler::getResAttrName(R_NRAUDIOCHANNELS), nchannels);
+-                        targetMimeType = targetMimeType + _(";channels=") + 
+-                                         nchannels;
+                     }
+                 }
+                 else if (chan != OFF)
+                 {
+                     t_res->addAttribute(MetadataHandler::getResAttrName(R_NRAUDIOCHANNELS), String::from(chan));
+-                    targetMimeType = targetMimeType + _(";channels=") + 
+-                                     String::from(chan);
+                 }
+             }
+ 
+Index: src/file_request_handler.cc
+===================================================================
+--- src/file_request_handler.cc	(revision 2103)
++++ src/file_request_handler.cc	(working copy)
+@@ -243,18 +243,6 @@
+ 
+             mimeType = tp->getTargetMimeType();
+             
+-            Ref<Dictionary> mappings = ConfigManager::getInstance()->getDictionaryOption(CFG_IMPORT_MAPPINGS_MIMETYPE_TO_CONTENTTYPE_LIST);
+-            if (mappings->get(mimeType) == CONTENT_TYPE_PCM)
+-            {
+-                String freq = item->getResource(0)->getAttribute(MetadataHandler::getResAttrName(R_SAMPLEFREQUENCY));
+-                String nrch = item->getResource(0)->getAttribute(MetadataHandler::getResAttrName(R_NRAUDIOCHANNELS));
+-
+-                if (string_ok(freq))
+-                    mimeType = mimeType + _(";rate=") + freq;
+-                if (string_ok(nrch))
+-                    mimeType = mimeType + _(";channels=") + nrch;
+-            }
+-
+             info->file_length = -1;
+         }
+         else
