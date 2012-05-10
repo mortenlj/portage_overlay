@@ -1,0 +1,100 @@
+# ChangeLog for app-backup/spideroak-bin
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/app-backup/spideroak-bin/ChangeLog,v 1.17 2012/03/17 11:29:33 blueness Exp $
+
+*spideroak-bin-4.3.9928 (17 Mar 2012)
+
+  17 Mar 2012; Anthony G. Basile <blueness@gentoo.org>
+  +spideroak-bin-4.3.9928.ebuild:
+  Version bump
+
+*spideroak-bin-4.3.9917 (11 Feb 2012)
+
+  11 Feb 2012; Anthony G. Basile <blueness@gentoo.org>
+  -spideroak-bin-4.2.9917_beta.ebuild, +spideroak-bin-4.3.9917.ebuild:
+  Bump from beta, bug #402065
+
+*spideroak-bin-4.2.9917_beta (09 Feb 2012)
+
+  09 Feb 2012; Anthony G. Basile <blueness@gentoo.org>
+  +spideroak-bin-4.2.9917_beta.ebuild:
+  Version bump, bug #402065
+
+  26 Jan 2012; Anthony G. Basile <blueness@gentoo.org> +files/headless.patch,
+  +files/opt-path.patch:
+  Added missing patches
+
+  26 Jan 2012; Anthony G. Basile <blueness@gentoo.org> +files/headless.patch,
+  +files/opt-path.patch:
+  Added missing patches
+
+*spideroak-bin-4.2.9913 (26 Jan 2012)
+
+  26 Jan 2012; Anthony G. Basile <blueness@gentoo.org>
+  +spideroak-bin-4.2.9913.ebuild, metadata.xml:
+  Version bump. Adds USE="system-lib" to use system rather than bundled libs,
+  see bug #398313
+
+  10 Jan 2012; Anthony G. Basile <blueness@gentoo.org> metadata.xml:
+  Added myself to the maintainer list
+
+  14 Dec 2011; Agostino Sarubbo <ago@gentoo.org> spideroak-bin-4.1.9860.ebuild:
+  Stable for AMD64, wrt bug #393407
+
+  14 Dec 2011; Pawel Hajdan jr <phajdan.jr@gentoo.org>
+  spideroak-bin-4.1.9860.ebuild:
+  x86 stable wrt bug #393407
+
+  10 Dec 2011; Naohiro Aota <naota@gentoo.org> spideroak-bin-4.0.9830.ebuild,
+  spideroak-bin-4.1.9860.ebuild:
+  Fix typo. wrt bug #393407
+
+*spideroak-bin-4.2.9907 (10 Dec 2011)
+
+  10 Dec 2011; Naohiro Aota <naota@gentoo.org> +spideroak-bin-4.2.9907.ebuild,
+  metadata.xml:
+  Vesrion bump; New USE flag to unbundle pycurl. Bug #393367
+
+  06 Dec 2011; Jeroen Roovers <jer@gentoo.org> metadata.xml:
+  Fix maintainer tag order. Remove bug assignment order instructions since they
+  are now moot.
+
+*spideroak-bin-4.1.9860 (01 Nov 2011)
+
+  01 Nov 2011; Naohiro Aota <naota@gentoo.org> -spideroak-bin-4.1.9850.ebuild,
+  +spideroak-bin-4.1.9860.ebuild:
+  Version bumped.
+
+  27 Oct 2011; Tomáš Chvátal <scarabeus@gentoo.org> Manifest:
+  Remanifest as the current one fails checksums.
+
+*spideroak-bin-4.1.9850 (29 Sep 2011)
+
+  29 Sep 2011; Naohiro Aota <naota@gentoo.org>
+  -spideroak-bin-4.1.9848_beta.ebuild, +spideroak-bin-4.1.9850.ebuild:
+  Version bump; drop old version. Bug #381569
+
+*spideroak-bin-4.1.9848_beta (05 Sep 2011)
+
+  05 Sep 2011; Naohiro Aota <naota@gentoo.org> -spideroak-bin-4.1.9842.ebuild,
+  +spideroak-bin-4.1.9848_beta.ebuild, -spideroak-bin-4.1.9848.ebuild:
+  Add _beta
+
+*spideroak-bin-4.1.9848 (04 Sep 2011)
+
+  04 Sep 2011; Naohiro Aota <naota@gentoo.org> +spideroak-bin-4.1.9848.ebuild:
+  Version bump. #381569
+
+*spideroak-bin-4.1.9842 (14 Aug 2011)
+
+  14 Aug 2011; Naohiro Aota <naota@gentoo.org> +spideroak-bin-4.0.9830.ebuild,
+  +spideroak-bin-4.1.9842.ebuild, +metadata.xml:
+  New package app-backup/spideroak-bin moved from betagraden
+
+*spideroak-bin-4.0.9830 (12 Jul 2011)
+
+  12 Jul 2011; Naohiro Aota <naota@gentoo.org> +spideroak-bin-4.0.9830.ebuild,
+  +metadata.xml:
+  New ebuild app-backup/spideroak-bin, writeen by Dennis Schridde
+  <devurandom@gmx.net>
+
