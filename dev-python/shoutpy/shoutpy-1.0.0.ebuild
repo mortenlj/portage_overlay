@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=4
+
 inherit distutils eutils
 
 DESCRIPTION="Python bindings for libshout2.1 or higher"
@@ -14,13 +16,13 @@ KEYWORDS="~x86"
 
 DEPEND="dev-lang/python
 	>=media-libs/libshout-2.1
-	>=dev-libs/boost-1.31.0"
+	>=dev-libs/boost-1.48[python]"
 
 # Adjust config
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	epatch "${FILESDIR}/no_library_extend.patch"
+	sed -i -e "s:\"boost_python\":\"boost_python-${PYTHON_ABI}-mt\":" "${S}/config.py" || die "Failed to update boost-library name in config.py"
 }
 
 # Install the example
