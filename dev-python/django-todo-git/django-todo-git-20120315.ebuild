@@ -1,4 +1,4 @@
-EAPI="2"
+EAPI="5"
 EGIT_REPO_URI="https://github.com/shacker/django-todo.git"
 EGIT_COMMIT="a1703b3127c98c48e9f3f3f361145f31c1662939"
 
