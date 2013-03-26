@@ -1,0 +1,13 @@
+-Xms128m
+-Xmx2048m
+-XX:MaxPermSize=512m
+-XX:ReservedCodeCacheSize=128m
+-ea
+-server
+-Dsun.awt.keepWorkingSetOnMinimize=true
+-XX:ParallelGCThreads=4 
+-XX:+UseConcMarkSweepGC 
+-XX:+UseParNewGC 
+-XX:SurvivorRatio=4 
+-XX:TargetSurvivorRatio=75 
+-XX:MaxTenuringThreshold=15
