@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit eutils
+inherit eutils flag-o-matic
 
 DESCRIPTION="Sybase isql replacement"
 HOMEPAGE="http://sourceforge.net/projects/sqsh/"
@@ -21,6 +21,7 @@ src_configure() {
     if [ -z "${SYBASE}" ]; then
         die "You must have Sybase installed, and the SYBASE environment variable set"
     fi
+    use amd64 && append-cppflags -DSYB_LP64
+    use amd64 && append-cflags -DSYB_LP64
     econf --with-readline
 }
-
