@@ -23,7 +23,8 @@ KEYWORDS="~amd64"
 SLOT="0"
 IUSE="doc examples"
 
-DEPEND="$(python_abi_depend "dev-python/pygame" "dev-python/pyenchant" "dev-python/gst-python" ">=dev-python/cython-0.15" "dev-python/setuptools" )"
+DEPEND="$(python_abi_depend "dev-python/pygame" "dev-python/pyenchant" ">=dev-python/cython-0.15" "dev-python/setuptools" )
+	dev-python/gst-python"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"
