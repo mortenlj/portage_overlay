@@ -13,7 +13,7 @@ from distutils.version import StrictVersion
 
 DOWNLOAD_URL = 'http://downloads.hipchat.com/linux/arch/hipchat-x86_64.tar.xz'
 VERSION_PATTERN = re.compile(r"hipchat-([0-9.]+[0-9]).*")
-FILES_DIR = os.path.dirname(os.path.abspath(__file__))
+FILES_DIR = os.path.dirname(os.path.realpath(__file__))
 EBUILD_DIR = os.path.dirname(FILES_DIR)
 EBUILD_NAME_TEMPLATE = "hipchat-%s.ebuild"
 EBUILD_TEMPLATE_FILENAME = "hipchat.ebuild"
