@@ -13,7 +13,7 @@ from distutils.version import StrictVersion
 
 UPDATES_URL = 'http://www.jetbrains.com/updates/updates.xml'
 VERSION_PATTERN = re.compile(r"idea-([0-9.]+[0-9]).*")
-FILES_DIR = os.path.dirname(os.path.abspath(__file__))
+FILES_DIR = os.path.dirname(os.path.realpath(__file__))
 EBUILD_DIR = os.path.dirname(FILES_DIR)
 EBUILD_NAME_TEMPLATE = "idea-%s.ebuild"
 EBUILD_TEMPLATE_FILENAME = "idea.ebuild"
