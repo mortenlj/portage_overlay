@@ -41,7 +41,7 @@ DEPEND="
 	>=sys-devel/gcc-3.3.5
 	>=dev-libs/boost-1.34.0
 	sys-devel/make
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	sys-devel/flex
 	virtual/yacc
 "
