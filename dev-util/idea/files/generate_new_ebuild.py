@@ -19,6 +19,13 @@ EBUILD_NAME_TEMPLATE = "idea-%s.ebuild"
 EBUILD_TEMPLATE_FILENAME = "idea.ebuild"
 
 
+def normalize_version(build):
+    version = build.get("version")
+    if not "." in version:
+        return version + ".0"
+    return version
+
+
 def get_latest_update():
     uobj = urllib2.urlopen(UPDATES_URL)
     try:
@@ -30,7 +37,8 @@ def get_latest_update():
         release_channels.sort(key=key)
         latest_channel = release_channels[-1]
         build = latest_channel.find("build")
-        return build.get("number"), StrictVersion(build.get("version"))
+        version = normalize_version(build)
+        return build.get("number"), StrictVersion(version)
     finally:
         uobj.close()
 
