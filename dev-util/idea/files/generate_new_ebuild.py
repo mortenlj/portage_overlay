@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8
-import subprocess
 
 import urllib2
-import shutil
 import re
 import os
+import subprocess
 
 from xml.etree import cElementTree as ET
 
-from distutils.version import StrictVersion
+from distutils.version import LooseVersion
 
 UPDATES_URL = 'http://www.jetbrains.com/updates/updates.xml'
 VERSION_PATTERN = re.compile(r"idea-([0-9.]+[0-9]).*")
@@ -17,13 +16,6 @@ FILES_DIR = os.path.dirname(os.path.realpath(__file__))
 EBUILD_DIR = os.path.dirname(FILES_DIR)
 EBUILD_NAME_TEMPLATE = "idea-%s.ebuild"
 EBUILD_TEMPLATE_FILENAME = "idea.ebuild"
-
-
-def normalize_version(build):
-    version = build.get("version")
-    if not "." in version:
-        return version + ".0"
-    return version
 
 
 def get_latest_update():
@@ -37,8 +29,7 @@ def get_latest_update():
         release_channels.sort(key=key)
         latest_channel = release_channels[-1]
         build = latest_channel.find("build")
-        version = normalize_version(build)
-        return build.get("number"), StrictVersion(version)
+        return build.get("number"), LooseVersion(build.get("version"))
     finally:
         uobj.close()
 
@@ -46,11 +37,11 @@ def get_latest_update():
 def get_version(filename):
     m = VERSION_PATTERN.match(filename)
     if m:
-        return StrictVersion(m.group(1))
+        return LooseVersion(m.group(1))
 
 
 def get_latest_on_disk():
-    latest = StrictVersion("0.0")
+    latest = LooseVersion("0.0")
     for filename in os.listdir(EBUILD_DIR):
         if filename.endswith(".ebuild"):
             current = get_version(filename)
@@ -66,7 +57,7 @@ def create_new(version, build_number):
     with open(src) as fobj:
         template = fobj.read()
     with open(dest, "w") as fobj:
-        ebuild = template % build_number
+        ebuild = template % (build_number, version.version[0])
         fobj.write(ebuild)
     print "Created new ebuild: %s" % dest
     subprocess.call(["ebuild", dest, "digest"])
