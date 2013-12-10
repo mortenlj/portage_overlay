@@ -1,16 +1,18 @@
-#!/usr/bin/ebuild
+# Copyright 1999-2009 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 EAPI=5
 
 inherit eutils
 
-BUILD=%s
+BUILD=129.1359
 
 S="${WORKDIR}/${PN}-IU-${BUILD}"
 DESCRIPTION="An intelligent Java IDE intensely focused on developer productivity."
 HOMEPAGE="http://www.jetbrains.com/idea/index.html"
 SRC_URI="http://download.jetbrains.com/idea/ideaIU-${PV}.tar.gz"
-SLOT=%s
+SLOT="0"
 LICENSE="|| (
 	IntelliJ-IDEA-academic
 	IntelliJ-IDEA-classroom
