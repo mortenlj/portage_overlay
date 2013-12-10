@@ -1,6 +1,6 @@
-# Copyright 1999-2009 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
-# $Header: $
+#!/usr/bin/ebuild
+
+EAPI=5
 
 inherit eutils
 
@@ -47,7 +47,7 @@ src_install () {
 
 	# Install pixmaps
 	insinto /usr/share/pixmaps
-	doins bin/*.png
+	newins bin/idea.png bin/idea-${SLOT}.png
 
 	# Install documentation
 	dodoc *.txt
@@ -61,8 +61,8 @@ src_install () {
 	# Launchers are necessary as IDEA depends on the fact being called from its
 	# homedir.
 	for i in idea inspect; do
-		ln -s "${D}/opt/${P}/bin/$i.sh" "${D}/usr/bin/$i"
+		dosym ${D}/opt/${P}/bin/${i}.sh ${D}/usr/bin/${i}-${SLOT}
 	done
 
-	make_desktop_entry idea "Intellij IDEA" idea "Development;IDE"
+	make_desktop_entry idea-${SLOT} "Intellij IDEA" idea-${SLOT} "Development;IDE"
 }
