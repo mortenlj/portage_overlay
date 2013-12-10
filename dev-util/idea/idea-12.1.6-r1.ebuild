@@ -49,7 +49,7 @@ src_install () {
 
 	# Install pixmaps
 	insinto /usr/share/pixmaps
-	newins bin/idea.png bin/idea-${SLOT}.png
+	newins bin/idea.png ${D}/usr/share/pixmaps/idea-${SLOT}.png
 
 	# Install documentation
 	dodoc *.txt
