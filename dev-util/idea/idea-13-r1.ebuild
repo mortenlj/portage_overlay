@@ -54,7 +54,7 @@ src_install () {
 
 	# Install default VM-options
 	insinto /etc/env.d
-	doins ${FILESDIR}/99idea
+	newins ${FILESDIR}/99idea 99idea-${SLOT}
 	insinto /etc
 	doins ${FILESDIR}/idea.vmoptions
 

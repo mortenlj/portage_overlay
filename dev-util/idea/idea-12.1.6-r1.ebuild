@@ -49,21 +49,21 @@ src_install () {
 
 	# Install pixmaps
 	insinto /usr/share/pixmaps
-	newins bin/idea.png ${D}/usr/share/pixmaps/idea-${SLOT}.png
+	newins bin/idea.png idea-${SLOT}.png
 
 	# Install documentation
 	dodoc *.txt
 
 	# Install default VM-options
 	insinto /etc/env.d
-	doins ${FILESDIR}/99idea
+	newins ${FILESDIR}/99idea 99idea-${SLOT}
 	insinto /etc
 	doins ${FILESDIR}/idea.vmoptions
 
 	# Launchers are necessary as IDEA depends on the fact being called from its
 	# homedir.
 	for i in idea inspect; do
-		dosym ${D}/opt/${P}/bin/${i}.sh ${D}/usr/bin/${i}-${SLOT}
+		dosym ${D}/opt/${P}/bin/${i}.sh /usr/bin/${i}-${SLOT}
 	done
 
 	make_desktop_entry idea-${SLOT} "Intellij IDEA" idea-${SLOT} "Development;IDE"
