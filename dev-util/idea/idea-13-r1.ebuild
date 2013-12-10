@@ -47,7 +47,7 @@ src_install () {
 
 	# Install pixmaps
 	insinto /usr/share/pixmaps
-	newins bin/idea.png ${D}/usr/share/pixmaps/idea-${SLOT}.png
+	newins bin/idea.png idea-${SLOT}.png
 
 	# Install documentation
 	dodoc *.txt
@@ -61,7 +61,7 @@ src_install () {
 	# Launchers are necessary as IDEA depends on the fact being called from its
 	# homedir.
 	for i in idea inspect; do
-		dosym ${D}/opt/${P}/bin/${i}.sh ${D}/usr/bin/${i}-${SLOT}
+		dosym ${D}/opt/${P}/bin/${i}.sh /usr/bin/${i}-${SLOT}
 	done
 
 	make_desktop_entry idea-${SLOT} "Intellij IDEA" idea-${SLOT} "Development;IDE"
