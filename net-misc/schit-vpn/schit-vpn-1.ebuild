@@ -28,11 +28,11 @@ src_unpack() {
 }
 
 src_install() {
-    local exes="ncdiag ncsvc ncui schit"
+    local exes="libncui.so ncdiag ncsvc ncui schit"
     insinto /opt/
     doins -r $S/nc
     for exe in ${exes}; do
-        fperms ugo+x /opt/nc/${exe}
+        fperms a+x /opt/nc/${exe}
     done
     dosym /opt/nc/schit /usr/bin/schit
 }
