@@ -61,11 +61,14 @@ src_configure() {
     if use cxx ; then
         ewarn "Building C++ library fails, ignoring use flag"
     fi
+    if use python ; then
+        ewarn "Python library does not respect slotting, ignoring use flag"
+    fi
 
 	econf \
 		--without-go \
 		$(use_with java) \
-		$(use_with python) \
+		--without-python \
 		$(use_with perl) \
 		--without-ruby \
 		$(use_with erlang) \
