@@ -8,10 +8,10 @@ inherit eutils
 
 DESCRIPTION="Thrift aims to make reliable, performant communication and data serialization across languages as efficient and seamless as possible."
 HOMEPAGE="http://thrift.apache.org"
-SRC_URI="http://www.apache.org/dist/${PN}/${PV}/${P}.tar.gz"
+SRC_URI="http://archive.apache.org/dist/${PN}/${PV}/${P}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 
 IUSE="java cxx python perl ruby php erlang csharp objc smalltalk ocaml haskell javascript glib"
 
@@ -55,19 +55,27 @@ src_prepare() {
 }
 
 src_configure() {
+    if use ruby ; then
+        ewarn "Building ruby library fails, ignoring use flag"
+    fi
+    if use cxx ; then
+        ewarn "Building C++ library fails, ignoring use flag"
+    fi
+
 	econf \
 		--without-go \
 		$(use_with java) \
 		$(use_with python) \
 		$(use_with perl) \
-		$(use_with ruby) \
+		--without-ruby \
 		$(use_with erlang) \
 		$(use_with csharp) \
 		$(use_with haskell) \
 		$(use_with php) $(use_with php php_extension) \
-		$(use_with cxx cpp) $(use_with cxx libevent) $(use_with cxx zlib)
+		--without-cpp --without-libevent --without-zlib \
+		--program-suffix=-${PV}
 }
 
 src_compile() {
-	emake -j1 || die "Error: emake failed!"
+	emake || die "Error: emake failed!"
 }

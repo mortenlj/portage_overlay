@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit eutils
 
@@ -10,8 +10,8 @@ DESCRIPTION="Thrift aims to make reliable, performant communication and data ser
 HOMEPAGE="http://thrift.apache.org"
 SRC_URI="http://www.apache.org/dist/${PN}/${PV}/${P}.tar.gz"
 LICENSE="Apache-2.0"
-SLOT="0"
-KEYWORDS="~x86"
+SLOT="0.9"
+KEYWORDS="~x86 ~amd64"
 
 IUSE="java cxx python perl ruby php erlang csharp objc smalltalk ocaml haskell javascript glib"
 
@@ -27,7 +27,7 @@ DEPEND="
 		dev-libs/libevent
 		sys-libs/zlib
 		)
-	python? ( >=dev-lang/python-2.4 )
+	python? ( >=dev-lang/python-2.6 )
 	perl? (
 		>=dev-lang/perl-5.0
 		dev-perl/Bit-Vector
@@ -38,10 +38,10 @@ DEPEND="
 	erlang? ( >=dev-lang/erlang-12.0.0 )
 	csharp? ( >=dev-lang/mono-1.2.4 )
 	glib? (	dev-libs/glib )
-	>=sys-devel/gcc-3.3.5
-	>=dev-libs/boost-1.34.0
+	>=sys-devel/gcc-4.2
+	>=dev-libs/boost-1.40.0
 	sys-devel/make
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	sys-devel/flex
 	virtual/yacc
 "
@@ -55,19 +55,27 @@ src_prepare() {
 }
 
 src_configure() {
+    if use ruby ; then
+        ewarn "Building ruby library fails, ignoring use flag"
+    fi
+    if use cxx ; then
+        ewarn "Building C++ library fails, ignoring use flag"
+    fi
+
 	econf \
 		--without-go \
 		$(use_with java) \
 		$(use_with python) \
 		$(use_with perl) \
-		$(use_with ruby) \
+		--without-ruby \
 		$(use_with erlang) \
 		$(use_with csharp) \
 		$(use_with haskell) \
 		$(use_with php) $(use_with php php_extension) \
-		$(use_with cxx cpp) $(use_with cxx libevent) $(use_with cxx zlib)
+		--without-cpp --without-libevent --without-zlib \
+		--program-suffix=-${PV}
 }
 
 src_compile() {
-	emake -j1 || die "Error: emake failed!"
+	emake || die "Error: emake failed!"
 }
