@@ -25,6 +25,7 @@ src_unpack() {
         cp ${source} ${target}
     fi
     unpack ubuntu-nc-${PV}.tar.gz
+    cp -f ${FILESDIR}/ssl.crt $S/nc
 }
 
 src_install() {
@@ -35,6 +36,5 @@ src_install() {
         fperms a+x /opt/nc/${exe}
     done
     fperms a+s /opt/nc/ncsvc
-    cp ${FILESDIR}/ssl.crt /opt/nc/
     dosym /opt/nc/schit /usr/bin/schit
 }
