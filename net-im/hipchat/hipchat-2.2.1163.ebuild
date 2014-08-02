@@ -22,6 +22,8 @@ src_install() {
     insinto /usr/
     doins -r $S/usr/share
     fperms ugo+x /opt/HipChat/bin/hipchat
+    fperms ugo+x /opt/HipChat/bin/linuxbrowserlaunch
+    fperms ugo+x /opt/HipChat/bin/HipChatNowPlaying.rb
     fperms ugo+x /opt/HipChat/lib/hipchat.bin
     dosym /opt/HipChat/bin/hipchat /usr/bin/hipchat
 }
