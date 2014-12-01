@@ -5,7 +5,7 @@
 
 EAPI="5"
 
-inherit git distutils
+inherit git-r3 distutils
 
 EGIT_REPO_URI="git://github.com/mintchaos/django_compressor.git"
 
