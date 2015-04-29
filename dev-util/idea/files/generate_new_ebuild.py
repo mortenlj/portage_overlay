@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8
+import tarfile
 
 import urllib2
 import re
 import os
+import portage
 import subprocess
 
 from xml.etree import cElementTree as ET
@@ -16,6 +18,8 @@ FILES_DIR = os.path.dirname(os.path.realpath(__file__))
 EBUILD_DIR = os.path.dirname(FILES_DIR)
 EBUILD_NAME_TEMPLATE = "idea-%s.ebuild"
 EBUILD_TEMPLATE_FILENAME = "idea.ebuild"
+DIST_FILENAME_TEMPLATE = "ideaIU-%s.tar.gz"
+BNUM_PATTERN = re.compile(r"idea-IU-(\d+\.\d+\.\d+)")
 
 
 def get_latest_update():
@@ -50,15 +54,34 @@ def get_latest_on_disk():
     return latest
 
 
+def write_ebuild(dest, template, version, build_number):
+    with open(dest, "w") as fobj:
+        ebuild = template % (build_number, version.version[0])
+        fobj.write(ebuild)
+
+
+def get_actual_build_number(version):
+    fpath = os.path.join(portage.settings["DISTDIR"], DIST_FILENAME_TEMPLATE % version)
+    with tarfile.open(fpath) as archive:
+        for member in archive.getmembers():
+            n = member.name
+            while os.path.sep in n:
+                n = os.path.dirname(n)
+            m = BNUM_PATTERN.search(n)
+            if m:
+                return m.group(1)
+
+
 def create_new(version, build_number):
     src = os.path.join(FILES_DIR, EBUILD_TEMPLATE_FILENAME)
     new_name = EBUILD_NAME_TEMPLATE % str(version)
     dest = os.path.join(EBUILD_DIR, new_name)
     with open(src) as fobj:
         template = fobj.read()
-    with open(dest, "w") as fobj:
-        ebuild = template % (build_number, version.version[0])
-        fobj.write(ebuild)
+    write_ebuild(dest, template, version, build_number)
+    subprocess.call(["ebuild", dest, "fetch"])
+    actual_build_number = get_actual_build_number(version)
+    write_ebuild(dest, template, version, actual_build_number)
     print "Created new ebuild: %s" % dest
     subprocess.call(["ebuild", dest, "digest"])
 
