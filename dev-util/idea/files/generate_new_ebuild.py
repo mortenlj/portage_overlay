@@ -79,7 +79,7 @@ def create_new(version, build_number):
     with open(src) as fobj:
         template = fobj.read()
     write_ebuild(dest, template, version, build_number)
-    subprocess.call(["ebuild", dest, "fetch"])
+    subprocess.call(["ebuild", dest, "digest"])
     actual_build_number = get_actual_build_number(version)
     write_ebuild(dest, template, version, actual_build_number)
     print "Created new ebuild: %s" % dest
