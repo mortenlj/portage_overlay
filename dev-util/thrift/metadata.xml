@@ -17,5 +17,6 @@
     <flag name='smalltalk'>Build Smalltalk compiler</flag>
     <flag name='haskell'>Build Haskell compiler and library</flag>
     <flag name='glib'>Build C (GLib) compiler</flag>
+    <flag name='go'>Build Go compiler</flag>
   </use>
 </pkgmetadata>
