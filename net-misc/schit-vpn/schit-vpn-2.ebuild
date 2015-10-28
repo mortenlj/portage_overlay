@@ -7,7 +7,9 @@ HOMEPAGE="http://gate.schibsted.no"
 KEYWORDS="~amd64 ~x86"
 SLOT="1"
 
-SRC_URI="https://confluence.finn.no/download/attachments/30442257/ubuntu-nc.gz?version=${PV}"
+RESTRICT="fetch"
+
+SRC_URI="https://confluence.finn.no/download/attachments/DUMMY/ubuntu-nc-updated.tar.gz -> ${P}.tar.gz"
 
 S=$WORKDIR
 
@@ -17,15 +19,15 @@ DEPEND="${RDEPEND}"
 
 QA_PREBUILT="*nc*"
 
+pkg_nofetch() {
+    einfo "Please download the latest version of the ubuntu package from"
+    einfo "https://confluence.finn.no/display/TEKK/Linux+VPN"
+    einfo "and place it in ${DISTDIR} named '${P}.tar.gz'"
+}
+
 src_unpack() {
-    local source=${DISTDIR}/${A}
-    local target=${DISTDIR}/ubuntu-nc-${PV}.tar.gz
-    if [[ ${source} -nt ${target} ]] ; then
-        einfo "Copying ${source} to ${target}"
-        cp ${source} ${target}
-    fi
-    unpack ubuntu-nc-${PV}.tar.gz
-    cp -f ${FILESDIR}/ssl.crt $S/nc
+    unpack ${P}.tar.gz
+    cp -f ${FILESDIR}/ssl-2.crt $S/nc/ssl.crt
 }
 
 src_install() {
