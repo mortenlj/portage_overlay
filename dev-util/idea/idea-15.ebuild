@@ -4,13 +4,13 @@ EAPI=5
 
 inherit eutils
 
-BUILD=139.225.3
+BUILD=143.381
 
 S="${WORKDIR}/${PN}-IU-${BUILD}"
 DESCRIPTION="An intelligent Java IDE intensely focused on developer productivity."
 HOMEPAGE="http://www.jetbrains.com/idea/index.html"
-SRC_URI="http://download.jetbrains.com/idea/ideaIU-${PV}.tar.gz"
-SLOT=14
+SRC_URI="http://download.jetbrains.com/idea/ideaIU-${PV}.0.tar.gz -> ideaIU-${PV}.tar.gz"
+SLOT=15
 LICENSE="|| (
 	IntelliJ-IDEA-academic
 	IntelliJ-IDEA-classroom
