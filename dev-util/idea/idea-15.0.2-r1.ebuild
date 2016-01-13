@@ -4,13 +4,13 @@ EAPI=5
 
 inherit eutils
 
-BUILD=%s
+BUILD=143.1184.17
 
 S="${WORKDIR}/${PN}-IU-${BUILD}"
 DESCRIPTION="An intelligent Java IDE intensely focused on developer productivity."
 HOMEPAGE="http://www.jetbrains.com/idea/index.html"
 SRC_URI="http://download.jetbrains.com/idea/ideaIU-${PV}.tar.gz"
-SLOT=%s
+SLOT=15
 LICENSE="|| (
 	IntelliJ-IDEA-academic
 	IntelliJ-IDEA-classroom
@@ -58,10 +58,10 @@ src_install () {
 	insinto /etc
 	doins ${FILESDIR}/idea.vmoptions
 
-    dosym ${D}/opt/${P}/bin/inspect.sh /usr/bin/inspect-${SLOT}
+    dosym ${D}opt/${P}/bin/inspect.sh /usr/bin/inspect-${SLOT}
 
     # We make a wrapper for the idea command to add some cli goodness
-    sed -e "s~@@IDEA_EXECUTABLE@@~${D}/opt/${P}/bin/idea.sh~g" ${FILESDIR}/idea-wrapper.sh > ${D}/usr/bin/idea-${SLOT} || die "sed failed"
+    sed -e "s~@@IDEA_EXECUTABLE@@~/opt/${P}/bin/idea.sh~g" ${FILESDIR}/idea-wrapper.sh > ${D}/usr/bin/idea-${SLOT} || die "sed failed"
 
 	make_desktop_entry idea-${SLOT} "Intellij IDEA ${PV}" idea-${SLOT} "Development;IDE"
 }
