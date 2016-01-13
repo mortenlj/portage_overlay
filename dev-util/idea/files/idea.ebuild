@@ -31,14 +31,14 @@ src_install () {
 	dodir /opt/${P}/
 	dodir /usr/share/pixmaps
 
-	insinto /opt/${P}/bin
 
 	# Install executables
-	insopts -m0755
-	doins bin/idea.sh bin/inspect.sh
-	doins bin/fsnotifier bin/fsnotifier64
+	exeinto /opt/${P}/bin
+	doexe bin/idea.sh bin/inspect.sh
+	doexe bin/fsnotifier bin/fsnotifier64
 
 	# Install data files
+	insinto /opt/${P}/bin
 	insopts -m0644
 	doins bin/appletviewer.policy bin/libbreakgen.so bin/libbreakgen64.so bin/libyjpagent-linux.so bin/libyjpagent-linux64.so bin/log.xml
 	doins bin/idea.vmoptions bin/idea64.vmoptions bin/idea.properties
@@ -58,10 +58,12 @@ src_install () {
 	insinto /etc
 	doins ${FILESDIR}/idea.vmoptions
 
-    dosym ${D}/opt/${P}/bin/inspect.sh /usr/bin/inspect-${SLOT}
+	dosym ${D}opt/${P}/bin/inspect.sh /usr/bin/inspect-${SLOT}
 
-    # We make a wrapper for the idea command to add some cli goodness
-    sed -e "s~@@IDEA_EXECUTABLE@@~${D}/opt/${P}/bin/idea.sh~g" ${FILESDIR}/idea-wrapper.sh > ${D}/usr/bin/idea-${SLOT} || die "sed failed"
+	# We make a wrapper for the idea command to add some cli goodness
+	sed -e "s~@@IDEA_EXECUTABLE@@~/opt/${P}/bin/idea.sh~g" ${FILESDIR}/idea-wrapper.sh > ${T}/idea-${SLOT} || die "sed failed"
+	exeinto /usr/bin
+	doexe ${T}/idea-${SLOT}
 
 	make_desktop_entry idea-${SLOT} "Intellij IDEA ${PV}" idea-${SLOT} "Development;IDE"
 }
