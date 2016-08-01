@@ -4,7 +4,7 @@ EAPI=5
 
 inherit eutils
 
-BUILD=162.1122.32
+BUILD=162.1121.32
 
 S="${WORKDIR}/${PN}-IU-${BUILD}"
 DESCRIPTION="An intelligent Java IDE intensely focused on developer productivity."
