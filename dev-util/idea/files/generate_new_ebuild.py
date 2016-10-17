@@ -78,12 +78,18 @@ def create_new(version, build_number):
     dest = os.path.join(EBUILD_DIR, new_name)
     with open(src) as fobj:
         template = fobj.read()
-    write_ebuild(dest, template, version, build_number)
-    subprocess.call(["ebuild", dest, "digest"])
-    actual_build_number = get_actual_build_number(version)
-    write_ebuild(dest, template, version, actual_build_number)
-    print "Created new ebuild: %s" % dest
-    subprocess.call(["ebuild", dest, "digest"])
+    try:
+        write_ebuild(dest, template, version, build_number)
+        subprocess.check_call(["ebuild", dest, "fetch"])
+        actual_build_number = get_actual_build_number(version)
+        write_ebuild(dest, template, version, actual_build_number)
+    except (subprocess.CalledProcessError, IOError) as e:
+        print "Error creating new ebuild: %s" % str(e)
+        if os.path.exists(dest):
+            os.unlink(dest)
+    else:
+        print "Created new ebuild: %s" % dest
+        subprocess.call(["ebuild", dest, "digest"])
 
 
 def main():
