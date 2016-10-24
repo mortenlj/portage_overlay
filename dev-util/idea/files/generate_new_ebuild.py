@@ -80,7 +80,7 @@ def create_new(version, build_number):
         template = fobj.read()
     try:
         write_ebuild(dest, template, version, build_number)
-        subprocess.check_call(["ebuild", dest, "fetch"])
+        subprocess.check_call(["ebuild", dest, "digest"])
         actual_build_number = get_actual_build_number(version)
         write_ebuild(dest, template, version, actual_build_number)
     except (subprocess.CalledProcessError, IOError) as e:
