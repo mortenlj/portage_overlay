@@ -27,7 +27,7 @@ def get_latest_update():
     try:
         data = uobj.read()
         root = ET.fromstring(data)
-        release_channels = root.findall("./product/channel[@status='release']")
+        release_channels = root.findall("./product[@name='IntelliJ IDEA']/channel[@status='release']")
         def key(el):
             return int(el.get("majorVersion"))
         release_channels.sort(key=key)
