@@ -9,7 +9,7 @@ SLOT="1"
 
 RESTRICT="fetch"
 
-SRC_URI="https://confluence.finn.no/download/attachments/DUMMY/ubuntu-nc-updated.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://artifacts.schibsted.io/artifactory/generic-local/finntech/${PN}/${P}.tar.gz"
 
 S=$WORKDIR
 
@@ -20,14 +20,9 @@ DEPEND="${RDEPEND}"
 QA_PREBUILT="*nc*"
 
 pkg_nofetch() {
-    einfo "Please download the latest version of the ubuntu package from"
-    einfo "https://confluence.finn.no/display/TEKK/Linux+VPN"
-    einfo "and place it in ${DISTDIR} named '${P}.tar.gz'"
-}
-
-src_unpack() {
-    unpack ${P}.tar.gz
-    cp -f ${FILESDIR}/ssl-2.crt $S/nc/ssl.crt
+    einfo "Please download '${P}.tar.gz' from"
+    einfo "https://artifacts.schibsted.io/artifactory/generic-local/finntech/${PN}"
+    einfo "and place it in ${DISTDIR}"
 }
 
 src_install() {
