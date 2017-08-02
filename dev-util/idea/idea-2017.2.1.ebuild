@@ -4,7 +4,7 @@ EAPI=5
 
 inherit eutils
 
-BUILD=171.3780.107
+BUILD=172.3544.35
 
 S="${WORKDIR}/${PN}-IU-${BUILD}"
 DESCRIPTION="An intelligent Java IDE intensely focused on developer productivity."
@@ -24,7 +24,7 @@ IUSE=""
 DEPEND=""
 RDEPEND=">=virtual/jdk-1.6"
 
-QA_TEXTRELS="opt/${P}/bin/libbreakgen*.so opt/${P}/bin/libyjpagent-linux*.so"
+QA_TEXTRELS="opt/${P}/bin/libyjpagent-linux*.so"
 
 src_install () {
 	dodir /usr/bin
@@ -34,8 +34,9 @@ src_install () {
 
 	# Install executables
 	exeinto /opt/${P}/bin
-	doexe bin/idea.sh bin/inspect.sh
-	doexe bin/fsnotifier bin/fsnotifier64
+	doexe bin/idea.sh bin/inspect.sh bin/format.sh
+	doexe bin/fsnotifier bin/fsnotifier-arm bin/fsnotifier64
+	doexe bin/printenv.py bin/restart.py
 
 	# Install data files
 	insinto /opt/${P}/bin
