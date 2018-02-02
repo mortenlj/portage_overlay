@@ -25,28 +25,39 @@ pkg_nofetch() {
 }
 
 src_install() {
-    doins -r .
-
     local exe
     for exe in \
-        usr/bin/xerox* \
-        usr/lib/cups/filter/Xerox* \
-        opt/Xerox/prtsys/v5lib/lib*.so \
-        opt/Xerox/prtsys/PatchAppArmorPolicy \
-        opt/Xerox/prtsys/x* ; do
-
-        fperms +x "/${exe}"
+        ${S}/usr/bin/xerox* \
+        ${S}/usr/libexec/cups/filter/Xerox* \
+        ${S}/opt/Xerox/prtsys/v5lib/lib* \
+        ${S}/opt/Xerox/prtsys/PatchAppArmorPolicy \
+        ${S}/opt/Xerox/prtsys/x* ; do
 
 		# Use \x7fELF header to separate ELF executables and libraries
 		[[ -f ${exe} && $(od -t x1 -N 4 "${exe}") == *"7f 45 4c 46"* ]] || continue
-		patchelf --set-rpath /opt/Xerox/prtsys/v5lib "${D}${exe}" || \
+		patchelf --set-rpath /opt/Xerox/prtsys/v5lib "${exe}" || \
 			die "patchelf failed on ${exe}"
     done
 
-    pushd "${D}opt/Xerox/prtsys" || die
+    doins -r opt
+
+    exeinto /usr/bin
+    doexe usr/bin/xerox*
+    exeinto /opt/Xerox/prtsys/
+    doexe opt/Xerox/prtsys/x*
+
+    exeinto /usr/libexec/cups/filter/
+    doexe usr/lib/cups/filter/Xerox*
+
+    exeinto /opt/Xerox/prtsys/v5lib/
+    doexe opt/Xerox/prtsys/v5lib/lib*
+
+    local ppd
+    for ppd in opt/Xerox/prtsys/ppd/*.ppd; do
+    	dosym "../../../../${ppd}" "/usr/share/cups/model/$(basename ${ppd})"
+    done
+
     echo " CUPS" > "${D}opt/Xerox/prtsys/.xp_cfg"
-    env | grep DISPLAY > "${D}opt/Xerox/prtsys/.xp_disp"
-    popd || die
 
     dodir /etc/xdg/autostart
     insinto /etc/xdg/autostart
