@@ -33,7 +33,7 @@ def get_latest_update():
         release_channels.sort(key=key)
         latest_channel = release_channels[-1]
         build = latest_channel.find("build")
-        return build.get("number"), LooseVersion(build.get("version"))
+        return build.get("fullNumber"), LooseVersion(build.get("version"))
     finally:
         uobj.close()
 
@@ -60,18 +60,6 @@ def write_ebuild(dest, template, version, build_number):
         fobj.write(ebuild)
 
 
-def get_actual_build_number(version):
-    fpath = os.path.join(portage.settings["DISTDIR"], DIST_FILENAME_TEMPLATE % version)
-    with tarfile.open(fpath) as archive:
-        for member in archive.getmembers():
-            n = member.name
-            while os.path.sep in n:
-                n = os.path.dirname(n)
-            m = BNUM_PATTERN.search(n)
-            if m:
-                return m.group(1)
-
-
 def create_new(version, build_number):
     src = os.path.join(FILES_DIR, EBUILD_TEMPLATE_FILENAME)
     new_name = EBUILD_NAME_TEMPLATE % str(version)
@@ -80,16 +68,12 @@ def create_new(version, build_number):
         template = fobj.read()
     try:
         write_ebuild(dest, template, version, build_number)
-        subprocess.check_call(["ebuild", dest, "digest"])
-        actual_build_number = get_actual_build_number(version)
-        write_ebuild(dest, template, version, actual_build_number)
+        subprocess.call(["ebuild", dest, "digest"])
+        print "Created new ebuild: %s" % dest
     except (subprocess.CalledProcessError, IOError) as e:
         print "Error creating new ebuild: %s" % str(e)
         if os.path.exists(dest):
             os.unlink(dest)
-    else:
-        print "Created new ebuild: %s" % dest
-        subprocess.call(["ebuild", dest, "digest"])
 
 
 def main():
@@ -97,6 +81,7 @@ def main():
     latest = get_latest_on_disk()
     if latest < download_version:
         create_new(download_version, build_number)
+
 
 if __name__ == "__main__":
     main()
