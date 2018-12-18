@@ -1,16 +1,12 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8
-import tarfile
 
-import urllib2
-import re
 import os
-import portage
+import re
 import subprocess
-
-from xml.etree import cElementTree as ET
-
+import urllib2
 from distutils.version import LooseVersion
+from xml.etree import cElementTree as ET
 
 UPDATES_URL = 'http://www.jetbrains.com/updates/updates.xml'
 VERSION_PATTERN = re.compile(r"idea-([0-9.]+[0-9]).*")
@@ -28,8 +24,10 @@ def get_latest_update():
         data = uobj.read()
         root = ET.fromstring(data)
         release_channels = root.findall("./product[@name='IntelliJ IDEA']/channel[@status='release']")
+
         def key(el):
             return int(el.get("majorVersion"))
+
         release_channels.sort(key=key)
         latest_channel = release_channels[-1]
         build = latest_channel.find("build")
