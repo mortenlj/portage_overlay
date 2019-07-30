@@ -4,13 +4,13 @@ EAPI=5
 
 inherit eutils
 
-BUILD=183.4588.61
+BUILD=191.6707.61
 
 S="${WORKDIR}/${PN}-IU-${BUILD}"
 DESCRIPTION="An intelligent Java IDE intensely focused on developer productivity."
 HOMEPAGE="http://www.jetbrains.com/idea/index.html"
 SRC_URI="http://download.jetbrains.com/idea/ideaIU-${PV}.tar.gz"
-SLOT=2018
+SLOT=2019
 LICENSE="|| (
 	IntelliJ-IDEA-academic
 	IntelliJ-IDEA-classroom
@@ -22,7 +22,7 @@ RESTRICT="mirror strip"
 IUSE=""
 
 DEPEND=""
-RDEPEND=">=virtual/jdk-1.6"
+RDEPEND=">=virtual/jdk-1.8"
 
 QA_TEXTRELS="opt/${P}/bin/libyjpagent-linux*.so"
 
@@ -35,20 +35,26 @@ src_install () {
 	# Install executables
 	exeinto /opt/${P}/bin
 	doexe bin/idea.sh bin/inspect.sh bin/format.sh
-	doexe bin/fsnotifier bin/fsnotifier-arm bin/fsnotifier64
+	doexe bin/fsnotifier bin/fsnotifier64
 	doexe bin/printenv.py bin/restart.py
 
 	# Install data files
 	insinto /opt/${P}/bin
 	insopts -m0644
-	doins bin/appletviewer.policy bin/libyjpagent-linux.so bin/libyjpagent-linux64.so bin/log.xml
+	doins bin/libdbm64.so bin/appletviewer.policy bin/libyjpagent-linux.so bin/libyjpagent-linux64.so bin/log.xml
 	doins bin/idea.vmoptions bin/idea64.vmoptions bin/idea.properties
 	insinto /opt/${P}
-	doins -r help lib jre64 plugins redist license
+	doins -r help lib plugins redist license
+	doins build.txt product-info.json
+
+    # Clear out some problematic files not needed for x86/amd64
+    rm -rf ${ED}opt/${P}/plugins/tfsIntegration/lib/native/{aix,freebsd,hpux,macosx,solaris,win32}
+    rm -rf ${ED}opt/${P}/plugins/tfsIntegration/lib/native/linux/{arm,ppc}
 
 	# Install pixmaps
 	insinto /usr/share/pixmaps
 	newins bin/idea.png idea-${SLOT}.png
+	newins bin/idea.svg idea-${SLOT}.svg
 
 	# Install documentation
 	dodoc *.txt
