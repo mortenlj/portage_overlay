@@ -45,6 +45,9 @@ src_install () {
 	doins -r help lib plugins redist license jbr
 	doins build.txt product-info.json
 
+	# Make java binaries executable
+	fperms +x -R /opt/${P}/jbr/bin
+
 	# Clear out some problematic files not needed for x86/amd64
 	rm -rf ${ED}opt/${P}/plugins/tfsIntegration/lib/native/{aix,freebsd,hpux,macosx,solaris,win32}
 	rm -rf ${ED}opt/${P}/plugins/tfsIntegration/lib/native/linux/{arm,ppc}
