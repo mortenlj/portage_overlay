@@ -4,11 +4,11 @@
     <repo quality="experimental" status="unofficial">
         <name>epcylon</name>
         <description>personal ebuilds</description>
-        <homepage>https://bitbucket.org/mortenlj/portage_overlay</homepage>
+        <homepage>https://github.com/mortenlj/portage_overlay</homepage>
         <owner type="project">
             <email>mortenjo@ifi.uio.no</email>
             <name>Morten Lied Johansen</name>
         </owner>
-        <source type="mercurial">https://bitbucket.org/mortenlj/portage_overlay</source>
+        <source type="git">https://github.com/mortenlj/portage_overlay</source>
     </repo>
 </repositories>
